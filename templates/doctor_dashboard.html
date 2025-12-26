@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main id="main" class="mt-5 pt-5">
+    <section class="section">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Doctor Dashboard</h2>
+                <p>Monitor your patients' health status and latest risk assessments.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Registered Patients</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Patient Name</th>
+                                            <th>Email</th>
+                                            <th>Latest Result</th>
+                                            <th>Probability</th>
+                                            <th>Last Checked</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for patient in patients %}
+                                        <tr>
+                                            <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                                            <td>{{ patient.email }}</td>
+                                            <td>
+                                                {% with latest=patient.diabetesprediction_set.last %}
+                                                    {% if latest %}
+                                                        <span class="badge {% if latest.result == 'Diabetic' %}bg-danger{% else %}bg-success{% endif %}">
+                                                            {{ latest.result }}
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="text-muted">No data</span>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            </td>
+                                            <td>
+                                                {% with latest=patient.diabetesprediction_set.last %}
+                                                    {% if latest %}
+                                                        {{ latest.probability|floatformat:2 }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                {% endwith %}
+                                            </td>
+                                            <td>
+                                                {% with latest=patient.diabetesprediction_set.last %}
+                                                    {% if latest %}
+                                                        {{ latest.created_at|date:"M d, Y" }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                {% endwith %}
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-outline-primary">View History</a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="6" class="text-center">No patients found.</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

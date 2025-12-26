@@ -4,54 +4,45 @@
       <div class="container">
         <div class="row">
 
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-6">
             <div class="footer-info">
-              <h3>E Health</h3>
+              <h3>WellSight</h3>
               <p>
-                A108 Adam Street <br>
-                NY 535022, USA<br><br>
-                <strong>Phone:</strong> +1 5589 55488 55<br>
-                <strong>Email:</strong> info@example.com<br>
+                Smart health insights powered by data. Check your diabetes risk, manage your profile, and download your results securely.
               </p>
-              <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-              </div>
+              <p class="mb-1"><strong>Email:</strong> support@ehealth.local</p>
+              <p class="mb-0"><strong>Hours:</strong> Mon–Fri, 9:00–17:00</p>
             </div>
           </div>
 
           <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
+            <h4>Explore</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#about">About</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url "diabetes_prediction" %}">Check Diabetes</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url "diabetes_result" %}">My Results</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url "doctors" %}">Doctors</a></li>
             </ul>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
+            <h4>Features</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url "diabetes_prediction" %}">Risk Assessment</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url "diabetes_result" %}">Results History</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url "profile" %}">Secure Profile</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url "download" %}">Download PDF</a></li>
             </ul>
           </div>
 
-          <div class="col-lg-4 col-md-6 footer-newsletter">
-            <h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+          <div class="col-lg-3 col-md-6 footer-newsletter">
+            <h4>Stay Informed</h4>
+            <p>Get product updates and wellness tips straight to your inbox.</p>
+            <form action="#" method="post" onsubmit="return false;">
+              <input type="email" name="email" placeholder="Your email">
+              <input type="submit" value="Subscribe">
             </form>
-
           </div>
 
         </div>
@@ -63,11 +54,7 @@
         &copy; Copyright <strong><span>E Health</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/E Health-free-bootstrap-theme/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed with care for patients and providers.
       </div>
     </div>
   </footer><!-- End Footer -->

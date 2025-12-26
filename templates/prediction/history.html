@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section">
+  <div class="container-narrow">
+    <div class="card shadow-1">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">My results history</h3>
+        <div class="d-flex gap-2">
+          <a href="{% url 'download' %}" class="btn btn-outline"><i class="fa-solid fa-file-pdf me-2"></i>Download
+            PDF</a>
+          <a href="{% url 'export_csv' %}" class="btn btn-outline"><i class="fa-solid fa-file-csv me-2"></i>Export
+            CSV</a>
+          <a href="{% url 'diabetes_prediction' %}" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>New
+            assessment</a>
+        </div>
+      </div>
+      <div class="card-body">
+        {% if items %}
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Age</th>
+                <th>BMI</th>
+                <th>BP</th>
+                <th>Glucose</th>
+                <th>Model</th>
+                <th>Confidence</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in items %}
+              <tr>
+                <td>{{ x.created_at }}</td>
+                <td>{{ x.age }}</td>
+                <td>{{ x.bmi }}</td>
+                <td>{{ x.bp }}</td>
+                <td>{{ x.glucose }}</td>
+                <td>{{ x.model_version }}</td>
+                <td>
+                  {% if x.probability %}{{ x.probability|floatformat:2 }}{% else %}-{% endif %}
+                </td>
+                <td>
+                  {% if x.result == "No Diabetes" %}
+                  <span class="badge bg-success">{{ x.result }}</span>
+                  {% else %}
+                  <span class="badge bg-danger">{{ x.result }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="mb-0">No results yet. <a href="{% url 'diabetes_prediction' %}">Run your first assessment</a>.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if items %}
+<section class="section pt-0">
+  <div class="container-narrow">
+    <div class="card shadow-1">
+      <div class="card-header">
+        <h3 class="mb-0">Health Trends</h3>
+      </div>
+      <div class="card-body">
+        <canvas id="healthChart" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('healthChart').getContext('2d');
+  const labels = [
+    {% for x in items reversed %}
+  "{{ x.created_at|date:'M d' }}",
+    {% endfor %}
+  ];
+
+  const bmiData = [
+    {% for x in items reversed %}
+  { { x.bmi } },
+  {% endfor %}
+  ];
+
+  const glucoseData = [
+    {% for x in items reversed %}
+  { { x.glucose } },
+  {% endfor %}
+  ];
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'BMI',
+        data: bmiData,
+        borderColor: '#0d6efd',
+        backgroundColor: 'rgba(13, 110, 253, 0.1)',
+        fill: true,
+        tension: 0.4
+      }, {
+        label: 'Glucose',
+        data: glucoseData,
+        borderColor: '#dc3545',
+        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
+</script>
+{% endif %}
+{% endblock %}
