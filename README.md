@@ -1,35 +1,70 @@
-# E-Health
+# E-Health: Legacy System Enhancement Project
 
-EHealth is an online Medical website where patient can register, predict there Diabetes status, and build a medical history. This project uses diabetes dataset related to people (age, sex, bmi, ldl etc..) who have been given a value that corresponds to a certain progression of diabetes. A machine learning model was developed with a test set for evaluating model (30% testing & 70% training) and then use to build this app. for every user inputs of (age, sex, bmi, ldl etc…) a prediction of a certain progression of diabetes can be made before having clinical trials.
+This project is a Django-based healthcare application designed to demonstrate the integration of machine learning into a legacy system. I cloned this repository as a learning exercise to analyze existing codebases, refactor inefficient patterns, and implement new, value-driven features.
 
-  Built with Django, Pandas, scikit-learn Bootstrap and Javascript.
+The application allows patients to register, predict their diabetes status based on health indicators, and track their medical history.
 
-![EHealth](sample/sample1.png)
-![EHealth](sample/sample2.png)
-![EHealth](sample/sample3.png)
-![EHealth](sample/sample1.gif)
-![EHealth](sample/sample.gif)
+## Project Journey & Enhancements
 
-### App Features
+As part of my professional development, I performed the following enhancements to the original system:
 
--   Machine learning prediction model for diabetes.
--   Multiple custom user type Doctor/Patient.
--   Patient can register, predict there Diabetes status, and build a medical history
--   Admin can view Patient information and medical history.
--   Patient can view, download results of diabetes & medical history recorded in PDF format.
+### 1. Architectural Refactoring (ML Flow)
+- **Problem**: The original system re-trained the machine learning model on every prediction request, causing significant latency and server-side overhead.
+- **Solution**: Decoupled the training logic. I implemented a Django management command to handle model training asynchronously, ensuring the web application remains fast and responsive by only loading pre-trained models.
 
+### 2. Role-Based Access Control (RBAC)
+- **Added**: A specialized **Doctor Dashboard** to provide a clinical view of patient metrics.
+- **Feature**: Dynamic user experiences where the interface adapts based on whether the user is a Patient or a healthcare provider (Staff/Doctor).
 
-### How to Set up the application
-Open terminal and use git clone command to download the remote Github repository to your computer
-```bash
-  1. git clone 
-  2. cd e_health
-  3. python3 -m venv venv
-  4. venv/bin/activate
-  5. pip3 install -r requirements.txt
-  6. Generate a new secret key or use default
-  7. python manage.py makemigrations
-  8. python manage.py migrate
-  9. python manage.py createsuperuser
-  10. python manage.py runserver
-  11. visit live server at http://127.0.0.1:8000/
+### 3. Data Visualization & Health Insights
+- **Added**: Interactive health trend charts using Chart.js.
+- **Goal**: To provide patients with visual feedback on their health markers (like BMI and Glucose) over time, moving beyond simple tabular data.
+
+## Features
+
+- **Diabetes Risk Prediction**: Utilizes a Scikit-learn model trained on clinical health indicators.
+- **Secure Medical History**: Patients can securely view and download their assessment history in PDF/CSV formats.
+- **Clinical Oversight**: Staff can monitor patient health trends and latest assessments via a dedicated dashboard.
+
+## Technical Stack
+
+- **Backend**: Django (Python)
+- **Machine Learning**: Scikit-learn, Pandas, NumPy
+- **Frontend**: Bootstrap 5, Javascript, Chart.js
+- **Reporting**: ReportLab (PDF generation)
+
+## Getting Started
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd E-Health-Django-Machine-Learning
+   ```
+
+2. **Environment Setup**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+3. **Initialize Application**:
+   - Create a `secret_key.txt` file in the root directory and paste a Django secret key.
+   - Run migrations:
+     ```bash
+     python manage.py makemigrations
+     python manage.py migrate
+     ```
+   - Train the ML model:
+     ```bash
+     python manage.py train_model
+     ```
+
+4. **Run Server**:
+   ```bash
+   python manage.py runserver
+   ```
+   Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+---
+*Note: This project was enhanced as an exercise in software maintenance, performance optimization, and UI/UX design.*
